@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTBKalk</title>
+    <link rel="icon" href="starlightlogo.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root[data-theme="light"] {
+            --bg-body: linear-gradient(to bottom right, #e0e7ff, #f3e8ff, #e0f2fe);
+            --bg-card: #ffffff;
+            --bg-input: #f9fafb;
+            --bg-result: #f9fafb;
+            --bg-toggle: #d1d5db;
+            --bg-weight-toggle: #e0e7ff;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --text-error: #dc2626;
+            --text-accent: #4f46e5;
+            --border-input: #d1d5db;
+            --shadow-card: 0 10px 15px -3px rgba(79, 70, 229, 0.1);
+            --tooltip-bg: #4f46e5;
+            --tooltip-text: #ffffff;
+        }
+
+        :root[data-theme="dark"] {
+            --bg-body: linear-gradient(to bottom right, #1e293b, #2e1065, #0f172a);
+            --bg-card: #1e293b;
+            --bg-input: #334155;
+            --bg-result: #334155;
+            --bg-toggle: #4b5563;
+            --bg-weight-toggle: #3730a3;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --text-error: #f87171;
+            --text-accent: #818cf8;
+            --border-input: #4b5563;
+            --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            --tooltip-bg: #818cf8;
+            --tooltip-text: #1e293b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-body);
+            color: var(--text-primary);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: var(--text-accent);
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: var(--text-accent);
+        }
+
+        input[type="text"]::-webkit-inner-spin-button,
+        input[type="text"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="text"] {
+            -moz-appearance: textfield;
+            background-color: var(--bg-input);
+            border-color: var(--border-input);
+            color: var(--text-primary);
+        }
+
+        .weight-input {
+            transition: all 0.5s ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .weight-input.hidden {
+            display: none;
+        }
+
+        .weight-input:not(.hidden) {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--tooltip-bg);
+            color: var(--tooltip-text);
+            text-align: left;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 10;
+            left: 110%;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+            white-space: normal;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        @media (max-width: 640px) {
+            .input-group {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            .input-group > div {
+                flex: 1 1 45%;
+                min-width: 0;
+            }
+            .weight-input:not(.hidden) {
+                opacity: 1;
+                pointer-events: auto;
+            }
+            .tooltip .tooltiptext {
+                width: 150px;
+                left: 100%;
+                top: 100%;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="w-full max-w-3xl mx-auto">
+
+        <div class="flex justify-end mb-4">
+            <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                <input type="checkbox" id="theme-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+                <label for="theme-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+            </div>
+            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Dark Mode</span>
+        </div>
+
+        <div class="rounded-2xl shadow-2xl overflow-hidden" style="background-color: var(--bg-card); box-shadow: var(--shadow-card);">
+            <div class="p-4 sm:p-6 lg:p-8">
+                <div class="text-center mb-6 sm:mb-8">
+                    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold" style="color: var(--text-primary);">UTBKalk</h1>
+                    <p class="mt-2 text-sm sm:text-base" style="color: var(--text-secondary);">Hitung skor rata-rata UTBK-SNBT kamu!</p>
+                </div>
+
+                <form id="utbk-form" class="space-y-6">
+                    <div>
+                        <h2 class="text-base sm:text-lg font-semibold mb-4 border-b pb-2" style="color: var(--text-primary); border-color: var(--border-input);">Nilai Subtes (200.00-1000.00)</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 sm:gap-x-6 gap-y-4">
+                            <div class="input-group flex flex-col sm:flex-row">
+                                <div class="w-full sm:pr-2">
+                                    <label for="PU" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
+                                        PU
+                                        <div class="tooltip">
+                                            <i class="fas fa-info-circle text-xs" style="color: var(--text-secondary);"></i>
+                                            <span class="tooltiptext">Kemampuan Penalaran Umum</span>
+                                        </div>
+                                    </label>
+                                    <input type="text" id="PU" placeholder="Skor kamu" class="w-full px-3 sm:px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 border-2" required>
+                                </div>
+
+                                <div id="wPU-container" class="weight-input hidden sm:w-2/5">
+                                    <label for="wPU" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">Bobot</label>
+                                    <input type="text" id="wPU" placeholder="%" maxlength="3" class="w-full px-3 sm:px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 border-2">
+                                </div>
+                            </div>
+
+                            <div class="input-group flex flex-col sm:flex-row">
+                                <div class="w-full sm:pr-2">
+                                    <label for="PK" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
+                                        PK
+                                        <div class="tooltip">
+                                            <i class="fas fa-info-circle text-xs" style="color: var(--text-secondary);"></i>
+                                            <span class="tooltiptext">Kemampuan Kuantitatif</span>
+                                        </div>
+                                    </label>
+                                    <input type="text" id="PK" placeholder="Skor kamu" class="w-full px-3 sm:px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 border-2" required>
+                                </div>
+
+                                <div id="wPK-container" class="weight-input hidden sm:w-2/5">
+                                    <label for="wPK" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">Bobot</label>
+                                    <input type="text" id="wPK" placeholder="%" maxlength="3" class="w-full px-3 sm:px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 border-2">
+                                </div>
+                            </div>
+
+                            <div class="input-group flex flex-col sm:flex-row">
+                                <div class="w-full sm:pr-2">
+                                    <label for="PPU" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
+                                        PPU
+                                        <div class="tooltip">
+                                            <i class="fas fa-info-circle text-xs" style="color: var(--text-secondary);"></i>
+                                            <span class="tooltiptext">Pengetahuan dan Pemahaman Umum</span>
+                                        </div>
+                                    </label>
+                                    <input type="text" id="PPU" placeholder="Skor kamu" class="w-full px-3 sm:px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 border-2" required>
+                                </div>
+
+                                <div id="wPPU-container" class="weight-input hidden sm:w-2/5">
+                                    <label for="wPPU" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">Bobot</label>
+                                    <input type="text" id="wPPU" placeholder="%" maxlength="3" class="w-full px-3 sm:px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 border-2">
+                                </div>
+                            </div>
+
+                            <div class="input-group flex flex-col sm:flex-row">
+                                <div class="w-full sm:pr-2">
+                                    <label for="PBM" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
+                                        PBM
+                                        <div class="tooltip">
+                                            <i class="fas fa-info-circle text-xs" style="color: var(--text-secondary);"></i>
+                                            <span class="tooltiptext">Kemampuan Memahami Bacaan dan Menulis</span>
+                                        </div>
+                                    </label>
+                                    <input type="text" id="PBM" placeholder="Skor kamu" class="w-full px-3 sm:px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 border-2" required>
+                                </div>
+
+                                <div id="wPBM-container" class="weight-input hidden sm:w-2/5">
+                                    <label for="wPBM" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">Bobot</label>
+                                    <input type="text" id="wPBM" placeholder="%" maxlength="3" class="w-full px-3 sm:px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 border-2">
+                                </div>
+                            </div>
+
+                            <div class="input-group flex flex-col sm:flex-row">
+                                <div class="w-full sm:pr-2">
+                                    <label for="LBI" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
+                                        LBI
+                                        <div class="tooltip">
+                                            <i class="fas fa-info-circle text-xs" style="color: var(--text-secondary);"></i>
+                                            <span class="tooltiptext">Literasi Bahasa Indonesia</span>
+                                        </div>
+                                    </label>
+                                    <input type="text" id="LBI" placeholder="Skor kamu" class="w-full px-3 sm:px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 border-2" required>
+                                </div>
+
+                                <div id="wLBI-container" class="weight-input hidden sm:w-2/5">
+                                    <label for="wLBI" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">Bobot</label>
+                                    <input type="text" id="wLBI" placeholder="%" maxlength="3" class="w-full px-3 sm:px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 border-2">
+                                </div>
+                            </div>
+
+                            <div class="input-group flex flex-col sm:flex-row">
+                                <div class="w-full sm:pr-2">
+                                    <label for="LBE" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
+                                        LBE
+                                        <div class="tooltip">
+                                            <i class="fas fa-info-circle text-xs" style="color: var(--text-secondary);"></i>
+                                            <span class="tooltiptext">Literasi Bahasa Inggris</span>
+                                        </div>
+                                    </label>
+                                    <input type="text" id="LBE" placeholder="Skor kamu" class="w-full px-3 sm:px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 border-2" required>
+                                </div>
+
+                                <div id="wLBE-container" class="weight-input hidden sm:w-2/5">
+                                    <label for="wLBE" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">Bobot</label>
+                                    <input type="text" id="wLBE" placeholder="%" maxlength="3" class="w-full px-3 sm:px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 border-2">
+                                </div>
+                            </div>
+
+                            <div class="input-group flex flex-col sm:flex-row">
+                                <div class="w-full sm:pr-2">
+                                    <label for="PM" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
+                                        PM
+                                        <div class="tooltip">
+                                            <i class="fas fa-info-circle text-xs" style="color: var(--text-secondary);"></i>
+                                            <span class="tooltiptext">Penalaran Matematika</span>
+                                        </div>
+                                    </label>
+                                    <input type="text" id="PM" placeholder="Skor kamu" class="w-full px-3 sm:px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 border-2" required>
+                                </div>
+
+                                <div id="wPM-container" class="weight-input hidden sm:w-2/5">
+                                    <label for="wPM" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">Bobot</label>
+                                    <input type="text" id="wPM" placeholder="%" maxlength="3" class="w-full px-3 sm:px-4 py-2 rounded-lg focus:ring-2 focus:ring-indigo-500 border-2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between p-4 rounded-lg" style="background-color: var(--bg-weight-toggle);">
+                        <div class="flex items-center gap-2">
+                            <span class="text-sm font-semibold" style="color: var(--text-primary);">Gunakan Bobot Kustom?</span>
+                            <div class="tooltip">
+                                <i class="fas fa-info-circle text-xs" style="color: var(--text-accent);"></i>
+                                <span class="tooltiptext">
+                                    Pembobotan cek di
+                                    <a href="https://zebracross.id/" target="_blank" class="hover:text-gray-700 dark:hover:text-gray-300 transition">zebracross.id</a>
+                                    aja yaa.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                            <input type="checkbox" name="toggle" id="useWeights" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
+                            <label for="useWeights" class="toggle-label block overflow-hidden h-6 rounded-full cursor-pointer" style="background-color: var(--bg-toggle);"></label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="w-full flex items-center justify-center gap-2 text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-semibold rounded-lg text-sm sm:text-md px-5 py-3 text-center transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            <i class="fas fa-calculator"></i>
+                            Hitung Skorku
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <div id="result-container" class="p-4 sm:p-6 border-t text-center" style="display: none; background-color: var(--bg-result); border-color: var(--border-input);">
+                <h3 class="font-bold text-base sm:text-lg mb-2" style="color: var(--text-primary);">Skor Rata-Rata Kamu</h3>
+                <p id="result" class="text-3xl sm:text-4xl font-bold"></p>
+                <p id="exact-result" class="text-xs sm:text-sm mt-2" style="color: var(--text-secondary);"></p>
+            </div>
+        </div>
+
+        <footer class="text-center mt-8">
+            <p class="text-sm" style="color: var(--text-secondary);">© 2025 
+                <a href="https://github.com/GaluhSaputra-SchoolNWork" target="_blank" class="hover:text-gray-700 dark:hover:text-gray-300 transition">Humei.</a>
+                Projek iseng. Pake aja.
+            </p>
+        </footer>          
+    </div>
+
+    <script>
+        const form = document.getElementById('utbk-form');
+        const useWeights = document.getElementById('useWeights');
+        const resultContainer = document.getElementById('result-container');
+        const resultDiv = document.getElementById('result');
+        const themeToggle = document.getElementById('theme-toggle');
+        const subtests = ['PU', 'PK', 'PPU', 'PBM', 'LBI', 'LBE', 'PM'];
+
+        themeToggle.addEventListener('change', () => {
+            document.documentElement.setAttribute('data-theme', themeToggle.checked ? 'dark' : 'light');
+            localStorage.setItem('theme', themeToggle.checked ? 'dark' : 'light');
+        });
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        themeToggle.checked = savedTheme === 'dark';
+
+        useWeights.addEventListener('change', () => {
+            const showWeights = useWeights.checked;
+            subtests.forEach(st => {
+                const weightContainer = document.getElementById(`w${st}-container`);
+                weightContainer.classList.toggle('hidden', !showWeights);
+            });
+        });
+
+        subtests.forEach(st => {
+            const scoreInput = document.getElementById(st);
+            scoreInput.addEventListener('input', () => {
+                const value = parseFloat(scoreInput.value) || 0;
+                if (value < 200 || value > 1000) {
+                    scoreInput.classList.add('border-red-500');
+                    let errorMsg = scoreInput.nextElementSibling;
+                    if (!errorMsg || !errorMsg.classList.contains('error-msg')) {
+                        errorMsg = document.createElement('p');
+                        errorMsg.classList.add('error-msg', 'text-red-500', 'text-xs', 'mt-1');
+                        scoreInput.parentNode.appendChild(errorMsg);
+                    }
+                    errorMsg.textContent = 'Nilai harus antara 200.00 dan 1000.00';
+                } else {
+                    scoreInput.classList.remove('border-red-500');
+                    const errorMsg = scoreInput.nextElementSibling;
+                    if (errorMsg && errorMsg.classList.contains('error-msg')) {
+                        errorMsg.remove();
+                    }
+                }
+            });
+
+            const weightInput = document.getElementById(`w${st}`);
+            if (weightInput) {
+                weightInput.addEventListener('input', () => {
+                    weightInput.value = weightInput.value.replace(/[^0-9]/g, '');
+                });
+            }
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let total = 0;
+            let calculationError = false;
+
+            resultDiv.className = 'text-3xl sm:text-4xl font-bold'; 
+
+            const normalizeDecimal = (value) => {
+                return value.replace(',', '.');
+            };
+
+            if (useWeights.checked) {
+                let weightSum = 0;
+                for (let st of subtests) {
+                    const scoreInput = normalizeDecimal(document.getElementById(st).value);
+                    const weightInput = normalizeDecimal(document.getElementById(`w${st}`).value);
+                    const score = parseFloat(scoreInput) || 0;
+                    const weight = parseFloat(weightInput) || 0;
+                    
+                    if (isNaN(score) || score < 200 || score > 1000 || isNaN(weight) || weight < 0 || weight > 100) {
+                        displayResult('Nilai atau bobot tidak valid.', true);
+                        return;
+                    }
+
+                    weightSum += weight;
+                    total += (score * (weight / 100));
+                }
+
+                if (Math.abs(weightSum - 100) > 0.01) {
+                    displayResult(`Total bobot harus 100%, sekarang ${weightSum.toFixed(2)}%`, true);
+                    return;
+                }
+            } else {
+                let scoreCount = 0;
+                for (let st of subtests) {
+                    const scoreInput = normalizeDecimal(document.getElementById(st).value);
+                    const score = parseFloat(scoreInput) || 0;
+                    if (isNaN(score) || score < 200 || score > 1000) {
+                        displayResult('Nilai subtes harus antara 200 dan 1000.', true);
+                        return;
+                    }
+                    total += score;
+                    scoreCount++;
+                }
+                total /= scoreCount;
+            }
+
+            displayResult(total, false);
+        });
+
+        /** @param {number|string} message @param {boolean} isError */
+        function displayResult(message, isError) {
+            resultContainer.style.display = 'block';
+            if (isError) {
+                resultDiv.textContent = message;
+                resultDiv.classList.add('text-red-600', 'text-base', 'sm:text-lg');
+                resultDiv.classList.remove('text-3xl', 'sm:text-4xl', 'text-indigo-600');
+                resultDiv.style.color = 'var(--text-error)';
+            } else {
+                resultDiv.textContent = `≈ ${parseFloat(message).toFixed(2)}`;
+                resultDiv.classList.add('text-indigo-600');
+                resultDiv.classList.remove('text-red-600', 'text-base', 'sm:text-lg');
+                resultDiv.style.color = 'var(--text-accent)';
+            }
+            
+            const exactResult = document.getElementById('exact-result');
+            if (!isError) {
+                let exactStr = message.toString();
+                if (!exactStr.includes('.')) {
+                    exactStr += '.0';
+                }
+                exactResult.textContent = `Tepatnya: ${exactStr}`;
+                exactResult.style.display = 'block';
+            } else {
+                exactResult.textContent = '';
+                exactResult.style.display = 'none';
+            }
+
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
