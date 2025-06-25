@@ -34,15 +34,13 @@
 
     <title>UTBKalk</title>
 
-    <link rel="preload" href="starlightlogo.png" as="image">
-    <link rel="icon" href="starlightlogo.png">
+    <link rel="preload" href="starlightlogo.png?v=1.0.1" as="image">
+    <link rel="icon" href="starlightlogo.png?v=1.0.1">
 
-    <link href="output.css" rel="stylesheet">
+    <link href="output.css?v=1.0.0" rel="stylesheet">
 
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <style>
         body {
@@ -121,7 +119,7 @@
         }
     </style>
 
-    <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="styles.css?v=1.0.0" media="print" onload="this.media='all'">
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4">
 
@@ -130,15 +128,17 @@
         <div class="flex justify-end mb-4">
             <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
                 <input type="checkbox" id="theme-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
-                <label for="theme-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                <label for="theme-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer">
+                    <span class="sr-only">Toggle dark mode</span>
+                </label>
             </div>
-            <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Dark Mode</span>
+            <label for="theme-toggle" class="text-sm font-medium text-gray-600 dark:text-gray-400 cursor-pointer">Dark Mode</label>
         </div>
 
         <div class="rounded-2xl shadow-2xl overflow-hidden" style="background-color: var(--bg-card); box-shadow: var(--shadow-card);">
             <div class="p-4 sm:p-6 lg:p-8">
                 <div class="text-center mb-6 sm:mb-8">
-                    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold" style="color: var(--text-primary);">UTBKalk</h1>
+                    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold">UTBKalk</h1>
                 </div>
 
                 <form id="utbk-form" class="space-y-6">
@@ -149,7 +149,7 @@
                             <div class="input-group flex flex-row items-end gap-3">
                                 <div class="flex-grow">
                                     <label for="PU" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
-                                        PU
+                                        <span>PU</span>
                                         <div class="tooltip">
                                             <svg class="info-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor">
                                                 <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
@@ -168,7 +168,7 @@
                             <div class="input-group flex flex-row items-end gap-3">
                                 <div class="flex-grow">
                                     <label for="PK" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
-                                        PK
+                                        <span>PK</span>
                                         <div class="tooltip">
                                             <svg class="info-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor">
                                                 <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
@@ -187,7 +187,7 @@
                             <div class="input-group flex flex-row items-end gap-3">
                                 <div class="flex-grow">
                                     <label for="PPU" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
-                                        PPU
+                                        <span>PPU</span>
                                         <div class="tooltip">
                                             <svg class="info-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor">
                                                 <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
@@ -206,7 +206,7 @@
                             <div class="input-group flex flex-row items-end gap-3">
                                 <div class="flex-grow">
                                     <label for="PBM" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
-                                        PBM
+                                        <span>PBM</span>
                                         <div class="tooltip">
                                             <svg class="info-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor">
                                                 <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
@@ -225,7 +225,7 @@
                             <div class="input-group flex flex-row items-end gap-3">
                                 <div class="flex-grow">
                                     <label for="LBI" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
-                                        LBI
+                                        <span>LBI</span>
                                         <div class="tooltip">
                                             <svg class="info-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor">
                                                 <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
@@ -244,7 +244,7 @@
                             <div class="input-group flex flex-row items-end gap-3">
                                 <div class="flex-grow">
                                     <label for="LBE" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
-                                        LBE
+                                        <span>LBE</span>
                                         <div class="tooltip">
                                             <svg class="info-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor">
                                                 <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
@@ -263,7 +263,7 @@
                             <div class="input-group flex flex-row items-end gap-3">
                                 <div class="flex-grow">
                                     <label for="PM" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
-                                        PM
+                                        <span>PM</span>
                                         <div class="tooltip">
                                             <svg class="info-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor">
                                                 <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
@@ -282,7 +282,7 @@
                     </div>
 
                     <div class="flex items-center justify-between p-4 rounded-lg" style="background-color: var(--bg-weight-toggle);">
-                        <div class="flex items-center gap-2">
+                        <label for="useWeights" class="flex items-center gap-2 cursor-pointer">
                             <span class="text-sm font-semibold" style="color: var(--text-primary);">Gunakan Bobot Kustom?</span>
                             <div class="tooltip">
                                 <svg class="info-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor">
@@ -294,10 +294,12 @@
                                     aja yaa.
                                 </span>
                             </div>
-                        </div>
+                        </label>
                         <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
                             <input type="checkbox" name="toggle" id="useWeights" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/>
-                            <label for="useWeights" class="toggle-label block overflow-hidden h-6 rounded-full cursor-pointer" style="background-color: var(--bg-toggle);"></label>
+                            <label for="useWeights" class="toggle-label block overflow-hidden h-6 rounded-full cursor-pointer" style="background-color: var(--bg-toggle);">
+                                <span class="sr-only">Toggle bobot kustom</span>
+                            </label>
                         </div>
                     </div>
 
