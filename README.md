@@ -34,6 +34,6 @@ UTBKalk? **Ngitungnya bener.** Yang versi berbobot dibikin sesuai sistem penilai
 
 ## 📜 License
 
-MIT, lo bebas ngoprek, pake, fork, atau apapun itu. Tapi jangan jadiin template buat jualan di TikTok shop terus bilang "bikin sendiri" juga 😂.
+MIT, lu bebas ngoprek, pake, fork, atau apapun itu. Tapi jangan jadiin template buat jualan di TikTok shop terus bilang "bikin sendiri" juga 😂.
 
-### Kalau punya saran fitur, kirim aja lewat pesan ke tiktok @humeiiii yaa!
+### Kalau punya saran fitur, kirim aja lewat pesan ke tiktok [@humeiiii](https://www.tiktok.com/@humeiiii) yaa!

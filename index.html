@@ -33,51 +33,18 @@
     </script>
 
     <title>UTBKalk</title>
+
+    <link rel="preload" href="starlightlogo.png" as="image">
     <link rel="icon" href="starlightlogo.png">
 
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="output.css" rel="stylesheet">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
     <style>
-        :root[data-theme="light"] {
-            --bg-body: linear-gradient(to bottom right, #e0e7ff, #f3e8ff, #e0f2fe);
-            --bg-card: #ffffff;
-            --bg-input: #f9fafb;
-            --bg-result: #f9fafb;
-            --bg-toggle: #d1d5db;
-            --bg-weight-toggle: #e0e7ff;
-            --text-primary: #1f2937;
-            --text-secondary: #4b5563;
-            --text-error: #dc2626;
-            --text-accent: #4f46e5;
-            --border-input: #d1d5db;
-            --shadow-card: 0 10px 15px -3px rgba(79, 70, 229, 0.1);
-            --tooltip-bg: #4f46e5;
-            --tooltip-text: #ffffff;
-        }
-
-        :root[data-theme="dark"] {
-            --bg-body: linear-gradient(to bottom right, #1e293b, #2e1065, #0f172a);
-            --bg-card: #1e293b;
-            --bg-input: #334155;
-            --bg-result: #334155;
-            --bg-toggle: #4b5563;
-            --bg-weight-toggle: #3730a3;
-            --text-primary: #f3f4f6;
-            --text-secondary: #9ca3af;
-            --text-error: #f87171;
-            --text-accent: #818cf8;
-            --border-input: #4b5563;
-            --shadow-card: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-            --tooltip-bg: #818cf8;
-            --tooltip-text: #1e293b;
-        }
-
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg-body);
@@ -91,18 +58,6 @@
         }
         .toggle-checkbox:checked + .toggle-label {
             background-color: var(--text-accent);
-        }
-
-        input[type="text"]::-webkit-inner-spin-button,
-        input[type="text"]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        input[type="text"] {
-            -moz-appearance: textfield;
-            background-color: var(--bg-input);
-            border-color: var(--border-input);
-            color: var(--text-primary);
         }
 
         .weight-input {
@@ -147,7 +102,26 @@
             visibility: visible;
             opacity: 1;
         }
+
+        .info-icon {
+            color: var(--text-secondary);
+            margin-left: 0.25rem;
+        }
+
+        input[type="text"]::-webkit-inner-spin-button,
+        input[type="text"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="text"] {
+            -moz-appearance: textfield;
+            background-color: var(--bg-input);
+            border-color: var(--border-input);
+            color: var(--text-primary);
+        }
     </style>
+
+    <link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'">
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4">
 
@@ -165,7 +139,6 @@
             <div class="p-4 sm:p-6 lg:p-8">
                 <div class="text-center mb-6 sm:mb-8">
                     <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold" style="color: var(--text-primary);">UTBKalk</h1>
-                    <p class="mt-2 text-sm sm:text-base" style="color: var(--text-secondary);">Hitung skor rata-rata UTBK-SNBT kamu!</p>
                 </div>
 
                 <form id="utbk-form" class="space-y-6">
@@ -178,7 +151,9 @@
                                     <label for="PU" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
                                         PU
                                         <div class="tooltip">
-                                            <i class="fas fa-info-circle text-xs" style="color: var(--text-secondary);"></i>
+                                            <svg class="info-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor">
+                                                <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
+                                            </svg>
                                             <span class="tooltiptext">Kemampuan Penalaran Umum</span>
                                         </div>
                                     </label>
@@ -195,7 +170,9 @@
                                     <label for="PK" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
                                         PK
                                         <div class="tooltip">
-                                            <i class="fas fa-info-circle text-xs" style="color: var(--text-secondary);"></i>
+                                            <svg class="info-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor">
+                                                <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
+                                            </svg>
                                             <span class="tooltiptext">Kemampuan Kuantitatif</span>
                                         </div>
                                     </label>
@@ -212,7 +189,9 @@
                                     <label for="PPU" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
                                         PPU
                                         <div class="tooltip">
-                                            <i class="fas fa-info-circle text-xs" style="color: var(--text-secondary);"></i>
+                                            <svg class="info-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor">
+                                                <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
+                                            </svg>
                                             <span class="tooltiptext">Pengetahuan dan Pemahaman Umum</span>
                                         </div>
                                     </label>
@@ -229,7 +208,9 @@
                                     <label for="PBM" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
                                         PBM
                                         <div class="tooltip">
-                                            <i class="fas fa-info-circle text-xs" style="color: var(--text-secondary);"></i>
+                                            <svg class="info-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor">
+                                                <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
+                                            </svg>
                                             <span class="tooltiptext">Kemampuan Memahami Bacaan dan Menulis</span>
                                         </div>
                                     </label>
@@ -246,7 +227,9 @@
                                     <label for="LBI" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
                                         LBI
                                         <div class="tooltip">
-                                            <i class="fas fa-info-circle text-xs" style="color: var(--text-secondary);"></i>
+                                            <svg class="info-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor">
+                                                <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
+                                            </svg>
                                             <span class="tooltiptext">Literasi Bahasa Indonesia</span>
                                         </div>
                                     </label>
@@ -263,7 +246,9 @@
                                     <label for="LBE" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
                                         LBE
                                         <div class="tooltip">
-                                            <i class="fas fa-info-circle text-xs" style="color: var(--text-secondary);"></i>
+                                            <svg class="info-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor">
+                                                <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
+                                            </svg>
                                             <span class="tooltiptext">Literasi Bahasa Inggris</span>
                                         </div>
                                     </label>
@@ -280,7 +265,9 @@
                                     <label for="PM" class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
                                         PM
                                         <div class="tooltip">
-                                            <i class="fas fa-info-circle text-xs" style="color: var(--text-secondary);"></i>
+                                            <svg class="info-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor">
+                                                <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
+                                            </svg>
                                             <span class="tooltiptext">Penalaran Matematika</span>
                                         </div>
                                     </label>
@@ -298,7 +285,9 @@
                         <div class="flex items-center gap-2">
                             <span class="text-sm font-semibold" style="color: var(--text-primary);">Gunakan Bobot Kustom?</span>
                             <div class="tooltip">
-                                <i class="fas fa-info-circle text-xs" style="color: var(--text-accent);"></i>
+                                <svg class="info-icon" width="12" height="12" viewBox="0 0 512 512" fill="currentColor">
+                                    <path d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"/>
+                                </svg>
                                 <span class="tooltiptext">
                                     Pembobotan cek di
                                     <a href="https://zebracross.id/" target="_blank" class="hover:text-gray-700 dark:hover:text-gray-300 transition">zebracross.id</a>
@@ -336,7 +325,7 @@
         </footer>          
     </div>
 
-    <script>
+    <script defer>
         const form = document.getElementById('utbk-form');
         const useWeights = document.getElementById('useWeights');
         const resultContainer = document.getElementById('result-container');
